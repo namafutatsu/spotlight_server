@@ -21,8 +21,8 @@ wss.on('connection', function (wsInstance) {
 
   const interval = setInterval(server.sendPixels, constants.REFRESH_RATE)
 
-  wsInstance.on('message', throttle(function (rawMsg, flags) {
-    if (flags.binary) {
+  wsInstance.on('message', throttle(function (rawMsg) {
+    if (typeof rawMsg !== 'string') {
       const name = Math.random().toString(36).substr(2, 8)  // random name.
       const filename = path.join(constants.IMAGE_PATH, name)
       if (!fs.existsSync(constants.IMAGE_PATH)) {
